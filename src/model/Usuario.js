@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UsuarioSchema = new mongoose.Schema({
     nome: { type: String, required: true },
-    email: { thpe: String, unique: true, required: true },
+    email: { type: String, unique: true, required: true },
     senha: { type: String, required: true },
     imagem: { type: String, required: true },
     endereco: [
@@ -26,4 +26,4 @@ const UsuarioSchema = new mongoose.Schema({
 
 const Usuario = mongoose.model("usuarios", UsuarioSchema);
 
-model.exports = Usuario;
+module.exports = Usuario;
