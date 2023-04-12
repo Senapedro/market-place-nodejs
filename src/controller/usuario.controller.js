@@ -67,13 +67,12 @@ const removeUserCrontoller = async(req, res) => {
         const deletedUser = await userService.removeUserService(req.params.id);
 
         console.log(deletedUser)
-        res.status(200).send({ message: `Sucesso, usuario deletado!`});
 
-        /*if(deletedUser.deleteCount > 0) {
-          
-        } else {
+        if(deletedUser == null) {
             res.status(404).send({ message: `Usuario não encontrado, tente novamente!`});
-        }*/
+        } else {
+            res.status(200).send({ message: `Sucesso, usuario deletado!`});
+        }
 
     }catch (err) {
         console.log(`erro: ${err.message}`);
