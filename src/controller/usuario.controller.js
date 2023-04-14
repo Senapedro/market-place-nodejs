@@ -1,3 +1,4 @@
+const Usuario = require("../model/Usuario");
 const userService = require("../service/usuario.service");
 
 const findUserByIdController = async (req, res) => {
@@ -82,7 +83,14 @@ const removeUserCrontoller = async(req, res) => {
 
 const addUserAddressController = async (req, res) => {
     try{
+        req.body.creatAt = new Date();
+        const endereco = await userService.addUserAdressService(req.params.id, req.body);
 
+        if(endereco.ok == 1) {
+            res.status(200).send({ message: `Endeço adicionado com sucesso!`});
+        }else {
+            res.status(400).send({ message: `Algo deu errado no endereço, tente novamente!`});
+        }
 
 
     }catch (err) {
@@ -93,8 +101,20 @@ const addUserAddressController = async (req, res) => {
 
 const removeUserAddressController = async (req, res) => {
     try{
+        const endereco = await userService.removeUserAddressService(req.body.id, req.body.addressId)
+        let found = false;
 
+        endereco.value.enderecos.map((valor, chave) => {
+            if(valor._id == req.body.addressId) {
+                found = true;
+            }
+        })
 
+        if(found) {
+            res.status(200).send({ message: `Endeço removido com sucesso!`});
+        }else {
+            res.status(400).send({ message: `Algo deu errado no endereço, não foi removido tente novamente!`});
+        }
 
     }catch (err) {
         console.log(`erro: ${err.message}`);
@@ -102,7 +122,7 @@ const removeUserAddressController = async (req, res) => {
     }
 };
 
-const addUserFavProductController =async (req, res) => {
+const addUserFavProductController = async (req, res) => {
     try{
 
 
